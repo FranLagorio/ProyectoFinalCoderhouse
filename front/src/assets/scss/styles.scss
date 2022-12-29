@@ -1,0 +1,15 @@
+@font-face {
+  font-family: "stocky";
+  src: url(./fonts/stocky.ttf)
+}
+
+//Fonts
+@import "fonts/fonts";
+
+
+
+//Boostrap Import
+@import "~bootstrap/scss/bootstrap";
+
+//Custom Boostrap
+@import "custom";
