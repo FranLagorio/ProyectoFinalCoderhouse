@@ -1,12 +1,13 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+
 import { BrowserRouter } from "react-router-dom";
 import { CssBaseline } from "@mui/material";
-import { AppRouter } from "./router/AppRouter";
-import { AppTheme } from "./theme";
 
-import "./assets/scss/styles.scss";
+import { AppTheme } from "./theme";
 import { UserComponentContext } from "./context/UserComponentContext";
+import "./assets/scss/styles.scss";
+import { App } from "./App";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   // <React.StrictMode>
@@ -14,7 +15,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     <BrowserRouter>
       <CssBaseline />
       <AppTheme>
-        <AppRouter />
+        <App />
       </AppTheme>
     </BrowserRouter>
   </UserComponentContext>

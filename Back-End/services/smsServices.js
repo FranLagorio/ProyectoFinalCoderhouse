@@ -1,9 +1,11 @@
 const twilio = require("twilio");
 
-const ACCOUNT_SID = process.env.ACCOUNT_SID_TWILIO;
-const AUTH_TOKEN = process.env.AUTH_TOKEN_TWILIO;
-const PHONE_NUMBER = process.env.SMSFROM;
-const PHONETO = process.env.SMSTO;
+const {
+  ACCOUNT_SID,
+  AUTH_TOKEN,
+  PHONE_NUMBER,
+  PHONETO,
+} = require("../src/config/config");
 
 const client = twilio(ACCOUNT_SID, AUTH_TOKEN);
 

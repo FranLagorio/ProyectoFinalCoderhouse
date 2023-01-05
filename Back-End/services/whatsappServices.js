@@ -1,8 +1,11 @@
 const twilio = require("twilio");
 
-const ACCOUNT_SID = process.env.ACCOUNT_SID_TWILIO;
-const AUTH_TOKEN = process.env.AUTH_TOKEN_TWILIO;
-const PHONE_NUMBER = process.env.FROMWSP;
+const {
+  ACCOUNT_SID,
+  AUTH_TOKEN,
+  FROM_WSP,
+  TO_WSP,
+} = require("../src/config/config");
 
 const client = twilio(ACCOUNT_SID, AUTH_TOKEN);
 
@@ -11,8 +14,8 @@ const sendWhatsapp = async (body) => {
     await client.messages
       .create({
         body,
-        from: process.env.FROMWSP,
-        to: process.env.TOWSP,
+        from: FROM_WSP,
+        to: TO_WSP,
       })
       .then((message) => console.log(message.sid))
       .done();

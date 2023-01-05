@@ -20,23 +20,27 @@ const signupController = {
   },
   postsignup: async (req, res) => {
     try {
-      req.session.username = req.user;
+      console.log("first");
+      // req.session.username = req.user;
       await sendEmail(req.user);
-      res.redirect("/home");
+      // res.redirect("/home");
+      res.status(200).send(req.user);
     } catch (error) {
       errorLogger.error({
         error: error.message,
       });
-      return res
-        .status(500)
-        .send({ status: "Sign Up error", body: error.message });
+      return res.status(500).send(error.message);
     }
   },
 
-  errorSignup: (req, res) => {
+  errorSignup: (req, res, info) => {
+    console.log("asdasdas");
     try {
-      res.render("pages/errorSignup");
+      console.log("first");
+      console.log(req);
+      console.log(info);
     } catch (error) {
+      console.log("error");
       errorLogger.error({
         error: error.message,
       });

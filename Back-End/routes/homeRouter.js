@@ -7,6 +7,11 @@ const { passportJwt } = require("../middlewares/passportMiddleware");
 
 homeRouter.get(
   "/",
+  // (req, res, next) => {
+  //   console.log("aca de nuevo");
+  //   console.log(req.isAuthenticated());
+  //   next();
+  // },
   passport.authenticate("jwt", { session: false }),
   homeController.get
 );

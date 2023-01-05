@@ -22,7 +22,7 @@ const errorLogger = winston.createLogger({
   ],
 });
 
-const urlMethodError = (req) => ({
+const urlMethodError = (req, error) => ({
   URL: req.originalUrl,
   method: req.method,
   error: error.message,

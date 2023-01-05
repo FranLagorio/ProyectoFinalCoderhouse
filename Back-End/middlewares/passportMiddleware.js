@@ -6,22 +6,21 @@ const ExtractJWT = require("passport-jwt").ExtractJwt;
 
 const Users = require("../models/userSchema");
 const { logger } = require("../src/utils/loggers");
-const {
-  isValidPassword,
-  createHash,
-} = require("../src/utils/passwordsFunctions");
 
 const loginPassport = {
   localStrategy: new LocalStrategy((username, password, done) => {
     Users.findOne({ username: username }, (err, user) => {
       if (err) return done(err);
+
       if (!user) {
         logger.info({ message: "User not found with username " + username });
         return done(null, false);
       }
-      if (!isValidPassword(user, password)) {
-        logger.info({ message: "Invalid Password" });
-        return done(null, false);
+
+      const validate = user.isValidPassword(password);
+
+      if (!validate) {
+        return done(null, false, { message: "Wrong Password" });
       }
 
       return done(null, user);
@@ -36,19 +35,19 @@ const signUpPassport = {
       Users.findOne({ username: username }, function (error, user) {
         if (error) {
           logger.error({ message: "Error in SingnUp: " + error });
-
           return done(error);
         }
 
         if (user) {
           logger.info({ message: "User already exists" });
-          return done(null, false);
+          return done(null, false, { message: "User already exists" });
         }
 
         const { name, age, address, phone } = req.body;
+
         const newUser = {
-          username: username,
-          password: createHash(password),
+          username,
+          password,
           name,
           age,
           address,
@@ -56,10 +55,13 @@ const signUpPassport = {
           image: req.file?.filename ? req.file.filename : "",
         };
 
+        if (!!!newUser.image) {
+          delete newUser.image;
+        }
+
         Users.create(newUser, (err, user) => {
           if (err) {
             logger.error({ message: "Error in Saving user: " + err });
-
             return done(err);
           }
           logger.info({ message: "User Registration succesful" });

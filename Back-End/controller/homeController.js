@@ -4,10 +4,7 @@ const { errorLogger } = require("../src/utils/loggers");
 
 const homeController = {
   get: async (req, res) => {
-    // console.log(req.session);
-    // console.log(req.user);
-    // console.log(req.query.secret_token);
-    // console.log(req.isAuthenticated());
+    //console.log(req.session);
 
     res.json({
       user: req.user ? req.user : false,

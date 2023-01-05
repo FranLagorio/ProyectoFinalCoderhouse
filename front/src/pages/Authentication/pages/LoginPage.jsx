@@ -1,21 +1,22 @@
 import { useEffect, useState } from "react";
 
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 
-import { Button, Card, Grid, Link, Typography } from "@mui/material";
+import { Alert, Button, Card, Grid, Link, Typography } from "@mui/material";
 import { Google } from "@mui/icons-material";
 
 import { AuthLayout } from "../layouts/AuthLayout";
 
-import { loginUser } from "../../api/backCoderAPI";
+import { loginUser } from "../../../api/backCoderAPI";
 
 // Formik validation
 import * as Yup from "yup";
 import { useFormik } from "formik";
 
-import { CardBody, Input, FormFeedback, Label, Form } from "reactstrap";
+import { CardBody, Form } from "reactstrap";
 import { useContext } from "react";
-import { UserContext } from "../../context/UserComponentContext";
+import { UserContext } from "../../../context/UserComponentContext";
+import { InputYupForm } from "../../../components/InputYupForm";
 
 const handleGoogleSubmit = () => {
   alert("Pronto podras conectarte con tu cuenta de Google");
@@ -23,10 +24,25 @@ const handleGoogleSubmit = () => {
 
 export const LoginPage = () => {
   const { user, setUser } = useContext(UserContext);
+  const [alert, setAlert] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
-    console.log(user);
-  }, [user]);
+    if (localStorage.getItem("authUser")) {
+      navigate("/home");
+    }
+  }, [user, navigate]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setAlert("");
+    }, 3000);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [alert]);
+
   const validation = useFormik({
     enableReinitialize: true,
     initialValues: {
@@ -43,18 +59,21 @@ export const LoginPage = () => {
         password: values.password,
       };
 
-      loginUser(user, setUser);
+      loginUser(user, setUser, setAlert);
     },
   });
 
   return (
-    <AuthLayout>
-      <Grid item md={6} lg={4} xl={3}>
+    <AuthLayout
+      bgColorPick={
+        "linear-gradient(343deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 35%, rgba(0,212,255,1) 100%)"
+      }>
+      <Grid item md={6} lg={4} xl={4}>
         <Card style={{ borderRadius: 5, fontFamily: "poppins" }}>
           <Typography
             variant="h5"
             textAlign={"center"}
-            style={{ margin: "1.5rem" }}>
+            style={{ margin: "1.5rem", marginTop: "3rem" }}>
             BACKEND CODERHOUSE 32080 {<br />} BIENVENIDO
           </Typography>
 
@@ -67,52 +86,16 @@ export const LoginPage = () => {
                   validation.handleSubmit();
                   return false;
                 }}>
-                {/* {error ? <Alert color="danger">{error}</Alert> : null} */}
-
-                <div className="mb-3">
-                  <Label className="form-label">Email</Label>
-                  <Input
-                    name="email"
-                    className="form-control"
-                    placeholder="Enter email"
-                    type="email"
-                    onChange={validation.handleChange}
-                    onBlur={validation.handleBlur}
-                    value={validation.values.email || ""}
-                    invalid={
-                      validation.touched.email && validation.errors.email
-                        ? true
-                        : false
-                    }
-                  />
-                  {validation.touched.email && validation.errors.email ? (
-                    <FormFeedback type="invalid">
-                      {validation.errors.email}
-                    </FormFeedback>
-                  ) : null}
-                </div>
-
-                <div className="mb-3">
-                  <Label className="form-label">Password</Label>
-                  <Input
-                    name="password"
-                    value={validation.values.password || ""}
-                    type="password"
-                    placeholder="Enter Password"
-                    onChange={validation.handleChange}
-                    onBlur={validation.handleBlur}
-                    invalid={
-                      validation.touched.password && validation.errors.password
-                        ? true
-                        : false
-                    }
-                  />
-                  {validation.touched.password && validation.errors.password ? (
-                    <FormFeedback type="invalid">
-                      {validation.errors.password}
-                    </FormFeedback>
-                  ) : null}
-                </div>
+                <InputYupForm
+                  validation={validation}
+                  typeInput={"string"}
+                  inputName={"email"}
+                />
+                <InputYupForm
+                  validation={validation}
+                  typeInput={"password"}
+                  inputName={"password"}
+                />
 
                 <div className="form-check">
                   <input
@@ -126,7 +109,9 @@ export const LoginPage = () => {
                     Remember me
                   </label>
                 </div>
-
+                <div className="mt-3">
+                  {alert ? <Alert severity="error">{alert}</Alert> : ""}
+                </div>
                 <div className="mt-4 text-center -50">
                   <Button
                     type="submit"
@@ -151,7 +136,7 @@ export const LoginPage = () => {
                     {/* <Link to="/reset-password" className="text-muted"> */}
                     Forgot your password?
                   </Link>
-                  <div className="mt-5">
+                  <div className="mt-2">
                     Don't have an account?{" "}
                     <Link
                       component={RouterLink}
@@ -161,20 +146,6 @@ export const LoginPage = () => {
                     </Link>
                   </div>
                 </div>
-
-                {/* {error &&
-                  error ===
-                    "Your account is not verified, check your email inbox" ? (
-                    <div className="mt-4 text-center">
-                      <Link
-                        to="/email-verification"
-                        state={{ email: validation.values.email }}
-                        className="text-muted">
-                        <i className="fa fa-envelope" />
-                        {" Resend verification email"}
-                      </Link>
-                    </div>
-                  ) : null} */}
               </Form>
             </div>
           </CardBody>
