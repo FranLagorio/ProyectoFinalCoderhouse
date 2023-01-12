@@ -8,7 +8,7 @@ logoutRouter.get("/", (req, res) => {
       const name = req.user.name;
       req.session.destroy((error) => {
         if (err) {
-          console.log(error);
+          console.log(err);
           res.send({ error: "Error al cerrar sesión" });
           return;
         }
