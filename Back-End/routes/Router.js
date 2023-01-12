@@ -25,6 +25,12 @@ const Router = (app) => {
   app.use("/info", infoRouter);
   app.use("/products", productRouter);
   app.use("/cart", cartRouter);
+  app.get("/test", (req, res) => {
+    console.log(req.user);
+    console.log(req.isAuthenticated());
+    console.log(req.session);
+    res.json(req.user);
+  });
 
   app.all("*", (req, res) => {
     logger.warn({ URL: req.originalUrl, method: req.method });
