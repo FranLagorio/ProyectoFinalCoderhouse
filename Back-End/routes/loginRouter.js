@@ -7,7 +7,11 @@ const loginRouter = Router();
 
 loginRouter.post(
   "/",
-  //ESTO FUNCIONABA SIN JWT
+  // passport.authenticate("login", { failureRedirect: "login/faillogin" }),
+  // (req, res) => {
+  //   res.json(req.user);
+  // }
+
   (req, res, next) => {
     passport.authenticate("login", (err, user, info) => {
       try {
@@ -22,7 +26,6 @@ loginRouter.post(
           const body = {
             _id: user._id,
             email: user.username,
-            password: user.password,
           };
           const token = jwt.sign({ user: body }, "top_secret");
 

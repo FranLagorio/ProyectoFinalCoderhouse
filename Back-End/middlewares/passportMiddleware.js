@@ -23,6 +23,9 @@ const loginPassport = {
         return done(null, false, { message: "Wrong Password" });
       }
 
+      // const userToLogin = { ...user._doc };
+      // delete userToLogin.password;
+
       return done(null, user);
     });
   }),
