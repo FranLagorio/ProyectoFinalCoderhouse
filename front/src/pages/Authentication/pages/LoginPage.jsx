@@ -1,100 +1,99 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from 'react'
 
-import { Link as RouterLink, useNavigate } from "react-router-dom";
+import { Link as RouterLink, useNavigate } from 'react-router-dom'
 
-import { Alert, Button, Card, Grid, Link, Typography } from "@mui/material";
-import { Google } from "@mui/icons-material";
+import { Alert, Button, Card, Grid, Link, Typography } from '@mui/material'
+import { Google } from '@mui/icons-material'
 
-import { AuthLayout } from "../layouts/AuthLayout";
+import { AuthLayout } from '../layouts/AuthLayout'
 
-import { loginUser } from "../../../api/backCoderAPI";
+import { loginUser } from '../../../api/backCoderAPI'
 
 // Formik validation
-import * as Yup from "yup";
-import { useFormik } from "formik";
+import * as Yup from 'yup'
+import { useFormik } from 'formik'
 
-import { CardBody, Form } from "reactstrap";
-import { useContext } from "react";
-import { UserContext } from "../../../context/UserComponentContext";
-import { InputYupForm } from "../../../components/InputYupForm";
+import { CardBody, Form } from 'reactstrap'
+import { UserContext } from '../../../context/UserComponentContext'
+import { InputYupForm } from '../../../components/InputYupForm'
 
 const handleGoogleSubmit = () => {
-  alert("Pronto podras conectarte con tu cuenta de Google");
-};
+  alert('Pronto podras conectarte con tu cuenta de Google')
+}
 
 export const LoginPage = () => {
-  const { user, setUser } = useContext(UserContext);
-  const [alert, setAlert] = useState("");
-  const navigate = useNavigate();
+  const { user, setUser } = useContext(UserContext)
+  const [alert, setAlert] = useState('')
+  const navigate = useNavigate()
 
   useEffect(() => {
-    if (localStorage.getItem("authUser")) {
-      navigate("/home");
+    if (localStorage.getItem('authUser')) {
+      navigate('/home')
     }
-  }, [user, navigate]);
+  }, [user, navigate])
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      setAlert("");
-    }, 3000);
+      setAlert('')
+    }, 3000)
 
     return () => {
-      clearTimeout(timer);
-    };
-  }, [alert]);
+      clearTimeout(timer)
+    }
+  }, [alert])
 
   const validation = useFormik({
     enableReinitialize: true,
     initialValues: {
-      email: "",
-      password: "",
+      email: '',
+      password: '',
     },
     validationSchema: Yup.object({
-      email: Yup.string().required("Please Enter Your Email"),
-      password: Yup.string().required("Please Enter Your Password"),
+      email: Yup.string().required('Please Enter Your Email'),
+      password: Yup.string().required('Please Enter Your Password'),
     }),
     onSubmit: (values) => {
       const user = {
         username: values.email,
         password: values.password,
-      };
+      }
 
-      loginUser(user, setUser, setAlert);
+      loginUser(user, setUser, setAlert)
     },
-  });
+  })
 
   return (
     <AuthLayout
       bgColorPick={
-        "linear-gradient(343deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 35%, rgba(0,212,255,1) 100%)"
+        'linear-gradient(343deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 35%, rgba(0,212,255,1) 100%)'
       }>
       <Grid item md={6} lg={4} xl={4}>
-        <Card style={{ borderRadius: 5, fontFamily: "poppins" }}>
+        <Card style={{ borderRadius: 5, fontFamily: 'poppins' }}>
           <Typography
             variant="h5"
-            textAlign={"center"}
-            style={{ margin: "1.5rem", marginTop: "3rem" }}>
+            textAlign={'center'}
+            style={{ margin: '1.5rem', marginTop: '3rem' }}>
             BACKEND CODERHOUSE 32080 {<br />} BIENVENIDO
           </Typography>
 
-          <CardBody style={{ margin: "1rem" }}>
+          <CardBody style={{ margin: '1rem' }}>
             <div className="p-2">
               <Form
                 className="form-horizontal"
                 onSubmit={(e) => {
-                  e.preventDefault();
-                  validation.handleSubmit();
-                  return false;
+                  e.preventDefault()
+                  validation.handleSubmit()
+                  return false
                 }}>
                 <InputYupForm
                   validation={validation}
-                  typeInput={"string"}
-                  inputName={"email"}
+                  typeInput={'string'}
+                  inputName={'email'}
                 />
                 <InputYupForm
                   validation={validation}
-                  typeInput={"password"}
-                  inputName={"password"}
+                  typeInput={'password'}
+                  inputName={'password'}
                 />
 
                 <div className="form-check">
@@ -110,14 +109,14 @@ export const LoginPage = () => {
                   </label>
                 </div>
                 <div className="mt-3">
-                  {alert ? <Alert severity="error">{alert}</Alert> : ""}
+                  {alert ? <Alert severity="error">{alert}</Alert> : ''}
                 </div>
                 <div className="mt-4 text-center -50">
                   <Button
                     type="submit"
                     variant="contained"
                     color="primary"
-                    sx={{ width: "50%" }}>
+                    sx={{ width: '50%' }}>
                     Log In
                   </Button>
                 </div>
@@ -125,23 +124,23 @@ export const LoginPage = () => {
                 <div className="mt-2 text-center">
                   <Button
                     variant="outlined"
-                    sx={{ width: "50%" }}
+                    sx={{ width: '50%' }}
                     onClick={() => handleGoogleSubmit()}>
                     <Google /> &nbsp; Google
                   </Button>
                 </div>
 
                 <div className="mt-3 d-flex flex-column align-items-center">
-                  <Link sx={{ textDecoration: "none" }}>
+                  <Link sx={{ textDecoration: 'none' }}>
                     {/* <Link to="/reset-password" className="text-muted"> */}
                     Forgot your password?
                   </Link>
                   <div className="mt-2">
-                    Don't have an account?{" "}
+                    Don{"'"}t have an account?{' '}
                     <Link
                       component={RouterLink}
                       to="/register"
-                      sx={{ textDecoration: "none" }}>
+                      sx={{ textDecoration: 'none' }}>
                       Register
                     </Link>
                   </div>
@@ -152,5 +151,5 @@ export const LoginPage = () => {
         </Card>
       </Grid>
     </AuthLayout>
-  );
-};
+  )
+}
