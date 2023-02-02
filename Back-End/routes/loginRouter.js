@@ -41,6 +41,29 @@ loginRouter.post(
   }
 );
 
+loginRouter.get(
+  "/google",
+  passport.authenticate("google", { scope: ["profile"] })
+  // passport.authenticate("login", { failureRedirect: "login/faillogin" }),
+  // (req, res) => {
+  //   res.json(req.user);
+  // }
+  // (req, res, next) => {
+  //   res.json("hola, estas por loggear en google");
+  // }
+);
+
+loginRouter.get(
+  "/google/callback",
+  passport.authenticate("google", {
+    failureRedirect: "http://localhost:3000/login",
+    successRedirect: "http://localhost:3000/home",
+  }),
+  (req, res) => {
+    res.json("estas logeando en google");
+  }
+);
+
 module.exports = loginRouter;
 
 // loginRouter.get("/", loginController.get);

@@ -7,7 +7,7 @@ import { Google } from '@mui/icons-material'
 
 import { AuthLayout } from '../layouts/AuthLayout'
 
-import { loginUser } from '../../../api/backCoderAPI'
+import { googleLogin, loginUser } from '../../../api/backCoderAPI'
 
 // Formik validation
 import * as Yup from 'yup'
@@ -17,15 +17,16 @@ import { CardBody, Form } from 'reactstrap'
 import { UserContext } from '../../../context/UserComponentContext'
 import { InputYupForm } from '../../../components/InputYupForm'
 
-const handleGoogleSubmit = () => {
-  alert('Pronto podras conectarte con tu cuenta de Google')
-}
-
 export const LoginPage = () => {
   const { user, setUser } = useContext(UserContext)
   const [alert, setAlert] = useState('')
   const navigate = useNavigate()
 
+  const handleGoogleSubmit = () => {
+    window.open('http://localhost:8080/login/google')
+    // console.log('first')
+    // googleLogin()
+  }
   useEffect(() => {
     if (localStorage.getItem('authUser')) {
       navigate('/home')

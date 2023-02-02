@@ -33,6 +33,7 @@ const redisSession = (app) => {
         maxAge: 86400000, // 1 dia
       },
       rolling: true,
+      //PROBAR CON RESAVE = FALSE
       resave: true,
       saveUninitialized: false,
     })

@@ -160,3 +160,10 @@
 {"level":"error","message":"Error in Saving user: ValidationError: age: Cast to Number failed for value \"!#!#!\" (type string) at path \"age\""}
 {"level":"error","message":"Error in Saving user: ValidationError: age: Cast to Number failed for value \"!#!#!\" (type string) at path \"age\""}
 {"level":"error","message":"Error in Saving user: ValidationError: age: Cast to Number failed for value \"!#!#!\" (type string) at path \"age\""}
+{"level":"warn","message":{"URL":"/auth/google","method":"POST"}}
+{"level":"warn","message":{"URL":"/login","method":"GET"}}
+{"level":"warn","message":{"URL":"/login","method":"GET"}}
+{"level":"warn","message":{"URL":"/info","method":"GET"}}
+{"level":"warn","message":{"URL":"/login","method":"GET"}}
+{"level":"warn","message":{"URL":"/login/google","method":"POST"}}
+{"level":"warn","message":{"URL":"/login/google/callback?code=4%2F0AWtgzh7i_kCj07UjaVMer9ItI4OU7h_9T93XxY_FCwyOG3p6PgkDFbeNnLz9svbY5yy56g&scope=profile+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile","method":"GET"}}

@@ -1,12 +1,12 @@
 import axios from 'axios'
 
 export const backendAPI = axios.create({
-  baseURL: 'http://localhost:8080/'
+  baseURL: 'http://localhost:8080/',
 })
 
-export const loginUser = (body, setUser, setAlert) => {
+export const loginUser = (userLogging, setUser, setAlert) => {
   axios
-    .post('http://localhost:8080/login', body)
+    .post('http://localhost:8080/login', userLogging)
     .then(function (response) {
       const user = { ...response.data }
       setUser(user)
@@ -34,5 +34,16 @@ export const registerUser = (body, setSuccess, setAlert, setLoading) => {
       // console.log(error.response.data);
       setLoading(false)
       return setAlert(error.response.data)
+    })
+}
+
+export const googleLogin = () => {
+  axios
+    .get('http://localhost:8080/login/google')
+    .then(function (response) {
+      console.log(response)
+    })
+    .catch(function (error) {
+      console.log(error)
     })
 }

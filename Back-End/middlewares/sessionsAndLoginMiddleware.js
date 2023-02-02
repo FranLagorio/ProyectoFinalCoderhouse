@@ -9,10 +9,11 @@ const {
 } = require("./passportMiddleware");
 const { redisSession } = require("../src/config/redisSessionConfig");
 
-const sessionMiddleware = (app) => {
+const sessionsAndLoginMiddleware = (app) => {
   redisSession(app);
 
   passport.use("login", loginPassport.localStrategy);
+  passport.use("google", loginPassport.googleStrategy);
   passport.use("signup", signUpPassport.localStrategy);
   passport.use("jwt", passportJwt.strategy);
 
@@ -27,4 +28,4 @@ const sessionMiddleware = (app) => {
   });
 };
 
-module.exports = { sessionMiddleware };
+module.exports = { sessionsAndLoginMiddleware };

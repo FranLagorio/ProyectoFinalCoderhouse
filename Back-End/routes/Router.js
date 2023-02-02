@@ -9,10 +9,10 @@ const productRouter = require("./productRouter");
 const cartRouter = require("./cartRouter");
 
 const Router = (app) => {
-  app.use((req, res, next) => {
-    logger.info({ URL: req.originalUrl, method: req.method });
-    next();
-  });
+  // app.use((req, res, next) => {
+  //   logger.info({ URL: req.originalUrl, method: req.method });
+  //   next();
+  // });
 
   app.get("/", (req, res) => {
     res.redirect("/login");

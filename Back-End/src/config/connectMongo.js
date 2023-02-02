@@ -1,13 +1,12 @@
 const mongoose = require("mongoose");
+const { logger } = require("../utils/loggers");
+const { MONGO_USER, MONGO_PSW, DB_NAME } = require("./config");
 
-const { MONGO_USER, MONGO_PSW } = require("../src/config/config");
-const { logger } = require("../src/utils/loggers");
-
-const connectMongoDB = () => {
-  mongoose
+const connectMongoDB = async () => {
+  await mongoose
     .connect(
-      `mongodb+srv://${MONGO_USER}:${MONGO_PSW}@cluster0.zqkvn9v.mongodb.net/?retryWrites=true&w=majority`,
-      { useNewUrlParser: true }
+      `mongodb+srv://${MONGO_USER}:${MONGO_PSW}@cluster0.zqkvn9v.mongodb.net/${DB_NAME}?retryWrites=true&w=majority`,
+      { useNewUrlParser: true, useUnifiedTopology: true }
     )
     .then(() => {
       logger.info({ message: "Connected to Mongo Atlas" });
